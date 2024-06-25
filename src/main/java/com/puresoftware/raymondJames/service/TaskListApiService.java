@@ -39,6 +39,7 @@ public class TaskListApiService {
 
     //For get task details using taskId
     public String getTask(String taskId) throws IOException {
+        System.out.println("Test");
         logger.debug("Service for GET A TASK FROM TASKLIST invoked..!!");
         String url = camundaApiUrl + taskVersion + taskId;
         Request request = new Request.Builder()
