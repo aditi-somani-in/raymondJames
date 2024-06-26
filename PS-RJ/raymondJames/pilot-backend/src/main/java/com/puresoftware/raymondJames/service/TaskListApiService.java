@@ -50,7 +50,7 @@ public class TaskListApiService {
 
     @Autowired
     private RestTemplate restTemplate;
- 
+
     /*TODO: Need to check if rest template are required*/
 
     //For get task details using taskId
@@ -108,7 +108,7 @@ public class TaskListApiService {
             ex.printStackTrace();
         }
         return response;
-}
+    }
 
     //For get variable Search from tasklist
     public ResponseEntity<String> variableSearch(String taskId, JSONObject requestBody) throws IOException{
