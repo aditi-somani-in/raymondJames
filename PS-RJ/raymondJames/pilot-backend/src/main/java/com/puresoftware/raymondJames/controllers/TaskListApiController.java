@@ -32,6 +32,11 @@ public class TaskListApiController {
         return taskListApiService.getForm(taskId);
     }
 
+    @PostMapping("/tasklistApi/getAllTask")
+    public ResponseEntity<String> getAllTask(@RequestBody String requestBody) throws  IOException{
+        return taskListApiService.searchTask(requestBody);
+    }
+
     @PostMapping("/tasklistApi/SearchTask")
     public ResponseEntity<String> searchTask(@RequestBody String requestBody) throws  IOException{
         return taskListApiService.searchTask(requestBody);
