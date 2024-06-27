@@ -94,7 +94,7 @@ public class TaskListApiService {
     }
 
     //For get task Search from tasklist
-    public ResponseEntity<String> searchTask(JSONObject requestBody) throws IOException{
+    public ResponseEntity<String> searchTask(String requestBody) throws IOException{
         logger.debug("Service for Search A TASK FROM TASKLIST invoked..!!");
         HttpHeaders headers = new HttpHeaders();
         headers.set(ACCEPT, applicationJson);
@@ -111,7 +111,7 @@ public class TaskListApiService {
     }
 
     //For get variable Search from tasklist
-    public ResponseEntity<String> variableSearch(String taskId, JSONObject requestBody) throws IOException{
+    public ResponseEntity<String> variableSearch(String taskId, String requestBody) throws IOException{
         logger.debug("Service for Search A Variable FROM TASKLIST invoked..!!");
         String url = camundaApiUrl + taskVersion+ taskId+"/variables/search";
         HttpHeaders headers = new HttpHeaders();
@@ -129,7 +129,7 @@ public class TaskListApiService {
     }
 
     //For get variable Search from tasklist
-    public ResponseEntity<String> draftVariable(String taskId, JSONObject requestBody) throws IOException{
+    public ResponseEntity<String> draftVariable(String taskId, String requestBody) throws IOException{
         logger.debug("Service for Draft Variables FROM TASKLIST invoked..!!");
         String url = camundaApiUrl + taskVersion+ taskId+"/variables";
         HttpHeaders headers = new HttpHeaders();

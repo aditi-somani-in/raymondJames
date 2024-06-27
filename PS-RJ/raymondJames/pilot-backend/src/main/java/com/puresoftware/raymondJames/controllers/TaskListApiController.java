@@ -33,17 +33,17 @@ public class TaskListApiController {
     }
 
     @PostMapping("/tasklistApi/SearchTask")
-    public ResponseEntity<String> searchTask(@RequestBody JSONObject requestBody) throws  IOException{
+    public ResponseEntity<String> searchTask(@RequestBody String requestBody) throws  IOException{
         return taskListApiService.searchTask(requestBody);
     }
 
     @PostMapping("/tasklistApi/VariableSearch/{taskId}")
-    public ResponseEntity<String> VariableSearch(@PathVariable String taskId, @RequestBody JSONObject requestBody) throws  IOException{
+    public ResponseEntity<String> VariableSearch(@PathVariable String taskId, @RequestBody String requestBody) throws  IOException{
         return taskListApiService.variableSearch(taskId, requestBody);
     }
 
     @PostMapping("/tasklistApi/DraftVariable/{taskId}")
-    public ResponseEntity<String> DraftVariable(@PathVariable String taskId, @RequestBody JSONObject requestBody) throws  IOException{
+    public ResponseEntity<String> DraftVariable(@PathVariable String taskId, @RequestBody String requestBody) throws  IOException{
         return taskListApiService.draftVariable(taskId, requestBody);
     }
 
