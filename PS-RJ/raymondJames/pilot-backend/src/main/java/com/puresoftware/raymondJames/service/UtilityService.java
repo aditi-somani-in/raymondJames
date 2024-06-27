@@ -11,7 +11,7 @@ import static com.puresoftware.raymondJames.utils.BearerTokenUtils.BEARER;
 import static com.puresoftware.raymondJames.utils.GlobalUtils.*;
 
 @Service
-public class ReUsableMethods {
+public class UtilityService {
 
     @Autowired
     BearerTokenGeneratorService bearerTokenGeneratorService;

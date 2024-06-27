@@ -14,6 +14,8 @@ import java.io.IOException;
  */
 
 @RestController
+@CrossOrigin(origins = "*") //Need to remove this before deploying this service
+@RequestMapping("/tasklistApi")
 public class TaskListApiController {
     @Autowired
     TaskListApiService taskListApiService;
@@ -22,34 +24,41 @@ public class TaskListApiController {
         this.taskListApiService = taskListApiService;
     }
 
-    @GetMapping("/tasklistApi/getTaskDetails/{taskId}")
+    /* Api for Get task details for provided taskid */
+    @GetMapping("/getTaskDetails/{taskId}")
     public ResponseEntity<String> getTask(@PathVariable String taskId) throws IOException {
         return taskListApiService.getTask(taskId);
     }
 
-    @GetMapping("/tasklistApi/getFormDetails/{taskId}")
+    /* Api for Get form details for provided taskid */
+    @GetMapping("/getFormDetails/{taskId}")
     public ResponseEntity<String> getForm(@PathVariable String taskId) throws IOException {
         return taskListApiService.getForm(taskId);
     }
 
-    @PostMapping("/tasklistApi/getAllTask")
+    /* Api for Get all tasks from the tasklist */
+    @PostMapping("/getAllTask")
     public ResponseEntity<String> getAllTask(@RequestBody String requestBody) throws  IOException{
         return taskListApiService.searchTask(requestBody);
     }
 
-    @PostMapping("/tasklistApi/SearchTask")
+    /* Api for Get task details as per request body from the task list for ex: state:"CREATED" */
+    @PostMapping("/SearchTask")
     public ResponseEntity<String> searchTask(@RequestBody String requestBody) throws  IOException{
         return taskListApiService.searchTask(requestBody);
     }
 
-    @PostMapping("/tasklistApi/VariableSearch/{taskId}")
+    /* Api for Search variable details from mentioned taskId and Variable */
+    @PostMapping("/VariableSearch/{taskId}")
     public ResponseEntity<String> VariableSearch(@PathVariable String taskId, @RequestBody String requestBody) throws  IOException{
         return taskListApiService.variableSearch(taskId, requestBody);
     }
 
-    @PostMapping("/tasklistApi/DraftVariable/{taskId}")
+    /* Api for add draft variable in integer format form mentioned taskid */
+    @PostMapping("/DraftVariable/{taskId}")
     public ResponseEntity<String> DraftVariable(@PathVariable String taskId, @RequestBody String requestBody) throws  IOException{
         return taskListApiService.draftVariable(taskId, requestBody);
     }
-
 }
+
+

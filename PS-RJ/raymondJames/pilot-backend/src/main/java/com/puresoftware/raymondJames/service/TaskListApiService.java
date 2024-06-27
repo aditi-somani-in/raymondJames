@@ -1,8 +1,6 @@
 package com.puresoftware.raymondJames.service;
 
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.Request;
-import okhttp3.Response;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,14 +11,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.HashMap;
-
-import static com.puresoftware.raymondJames.utils.BearerTokenUtils.*;
-import static com.puresoftware.raymondJames.utils.GlobalUtils.*;
 
 @Service
 @Slf4j
@@ -49,7 +42,7 @@ public class TaskListApiService {
     private RestTemplate restTemplate;
 
     @Autowired
-    private ReUsableMethods reUsableMethods;
+    private UtilityService utilityService;
 
     /*TODO: Need to check if rest template are required*/
 
@@ -57,7 +50,7 @@ public class TaskListApiService {
     public ResponseEntity<String> getTask(String taskId) throws IOException {
         logger.debug("Service for GET A TASK FROM TASKLIST invoked..!!");
         String url =  camundaApiUrl + taskVersion + taskId;
-        HttpHeaders headers = reUsableMethods.addHeadersValue();
+        HttpHeaders headers = utilityService.addHeadersValue();
         HttpEntity<String> httpEntity = new HttpEntity(null, headers);
         ResponseEntity<String> response = null;
         try {
@@ -76,7 +69,7 @@ public class TaskListApiService {
         String processDefinitionKey = jsonObject.getString("processDefinitionKey");
         String formId = jsonObject.getString("formId");
         String url = formapiUrl+formId+"?processDefinitionKey="+processDefinitionKey;
-        HttpHeaders headers = reUsableMethods.addHeadersValue();
+        HttpHeaders headers = utilityService.addHeadersValue();
         HttpEntity<String> httpEntity = new HttpEntity(null, headers);
         ResponseEntity<String> response = null;
         try {
@@ -90,7 +83,7 @@ public class TaskListApiService {
     //For get task Search from tasklist
     public ResponseEntity<String> searchTask(String requestBody) throws IOException{
         logger.debug("Service for Search A TASK FROM TASKLIST invoked..!!");
-        HttpHeaders headers = reUsableMethods.addHeadersValue();
+        HttpHeaders headers = utilityService.addHeadersValue();
         HttpEntity<String> httpEntity = new HttpEntity(requestBody, headers);
         ResponseEntity<String> response = null;
         try {
@@ -105,7 +98,7 @@ public class TaskListApiService {
     public ResponseEntity<String> variableSearch(String taskId, String requestBody) throws IOException{
         logger.debug("Service for Search A Variable FROM TASKLIST invoked..!!");
         String url = camundaApiUrl + taskVersion+ taskId+"/variables/search";
-        HttpHeaders headers = reUsableMethods.addHeadersValue();
+        HttpHeaders headers = utilityService.addHeadersValue();
         HttpEntity<String> httpEntity = new HttpEntity(requestBody, headers);
         ResponseEntity<String> response = null;
         try {
@@ -120,7 +113,7 @@ public class TaskListApiService {
     public ResponseEntity<String> draftVariable(String taskId, String requestBody) throws IOException{
         logger.debug("Service for Draft Variables FROM TASKLIST invoked..!!");
         String url = camundaApiUrl + taskVersion+ taskId+"/variables";
-        HttpHeaders headers = reUsableMethods.addHeadersValue();
+        HttpHeaders headers = utilityService.addHeadersValue();
         HttpEntity<String> httpEntity = new HttpEntity(requestBody, headers);
         ResponseEntity<String> response = null;
         try {
