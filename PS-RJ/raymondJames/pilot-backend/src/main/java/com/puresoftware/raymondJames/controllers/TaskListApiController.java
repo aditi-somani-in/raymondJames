@@ -1,10 +1,10 @@
 package com.puresoftware.raymondJames.controllers;
 
 import com.puresoftware.raymondJames.service.TaskListApiService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -26,4 +26,25 @@ public class TaskListApiController {
     public String getTask(@PathVariable String taskId) throws IOException {
         return taskListApiService.getTask(taskId);
     }
+
+    @GetMapping("/tasklistApi/getFormDetails/{taskId}")
+    public String getForm(@PathVariable String taskId) throws IOException {
+        return taskListApiService.getForm(taskId);
+    }
+
+    @PostMapping("/tasklistApi/SearchTask")
+    public ResponseEntity<String> searchTask(@RequestBody String requestBody) throws  IOException{
+        return taskListApiService.searchTask(requestBody);
+    }
+
+    @PostMapping("/tasklistApi/VariableSearch/{taskId}")
+    public ResponseEntity<String> VariableSearch(@PathVariable String taskId, @RequestBody String requestBody) throws  IOException{
+        return taskListApiService.variableSearch(taskId, requestBody);
+    }
+
+    @PostMapping("/tasklistApi/DraftVariable/{taskId}")
+    public ResponseEntity<String> DraftVariable(@PathVariable String taskId, @RequestBody String requestBody) throws  IOException{
+        return taskListApiService.draftVariable(taskId, requestBody);
+    }
+
 }
