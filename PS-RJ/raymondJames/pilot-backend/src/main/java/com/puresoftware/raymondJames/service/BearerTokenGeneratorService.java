@@ -1,6 +1,8 @@
 package com.puresoftware.raymondJames.service;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -61,7 +63,6 @@ public class BearerTokenGeneratorService {
 
         ResponseEntity<String> response = restTemplate.exchange(bearerTokenUrl, HttpMethod.POST, request, String.class);
         JSONObject bearerTokenAccessKey = new JSONObject(response.getBody());
-
         try {
             return bearerTokenAccessKey.getString("access_token");
         } catch (Exception e) {

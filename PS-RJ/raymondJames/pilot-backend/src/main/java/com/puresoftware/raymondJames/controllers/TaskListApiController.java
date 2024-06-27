@@ -23,12 +23,12 @@ public class TaskListApiController {
     }
 
     @GetMapping("/tasklistApi/getTaskDetails/{taskId}")
-    public String getTask(@PathVariable String taskId) throws IOException {
+    public ResponseEntity<String> getTask(@PathVariable String taskId) throws IOException {
         return taskListApiService.getTask(taskId);
     }
 
     @GetMapping("/tasklistApi/getFormDetails/{taskId}")
-    public String getForm(@PathVariable String taskId) throws IOException {
+    public ResponseEntity<String> getForm(@PathVariable String taskId) throws IOException {
         return taskListApiService.getForm(taskId);
     }
 
