@@ -1,9 +1,11 @@
 package com.puresoftware.raymondJames.controllers;
 
+import com.puresoftware.raymondJames.pojos.BearerTokenGeneratorDetails;
 import com.puresoftware.raymondJames.service.BearerTokenGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;

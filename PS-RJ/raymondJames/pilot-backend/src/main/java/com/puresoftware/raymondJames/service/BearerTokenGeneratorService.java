@@ -1,8 +1,10 @@
 package com.puresoftware.raymondJames.service;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.puresoftware.raymondJames.pojos.BearerTokenGeneratorDetails;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.util.Collections;
 
 import static com.puresoftware.raymondJames.utils.BearerTokenUtils.*;
+import static com.puresoftware.raymondJames.utils.GlobalUtils.ACCESSTOKEN;
 import static com.puresoftware.raymondJames.utils.GlobalUtils.CONTENT_TYPE;
 
 @Service
@@ -49,6 +52,7 @@ public class BearerTokenGeneratorService {
         MultiValueMap<String, String> tokenRequestBody = new LinkedMultiValueMap<String, String>();
 
         HttpEntity request = new HttpEntity(tokenRequestBody, headers);
+        BearerTokenGeneratorDetails.BearerTokenGeneratorResponse bearerTokenGeneratorResponse = new BearerTokenGeneratorDetails.BearerTokenGeneratorResponse();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         headers.set(GRANT_TYPE,grantType);
@@ -60,10 +64,11 @@ public class BearerTokenGeneratorService {
         tokenRequestBody.add(CLIENT_SECRET_KEY,clientSecret);
 
         ResponseEntity<String> response = restTemplate.exchange(bearerTokenUrl, HttpMethod.POST, request, String.class);
-        JSONObject bearerTokenAccessKey = new JSONObject(response.getBody());
-
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode readingResponse = objectMapper.readTree(response.getBody());
+        bearerTokenGeneratorResponse.setAccessToken(readingResponse.get(ACCESSTOKEN).asText());
         try {
-            return bearerTokenAccessKey.getString("access_token");
+            return bearerTokenGeneratorResponse.getAccessToken();
         } catch (Exception e) {
             throw new IOException("Bearer Token Generator Service failed to generate access_token..!!");
         }
