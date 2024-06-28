@@ -1,29 +1,32 @@
-package com.puresoftware.raymondJames.service;
+package com.puresoftware.raymondJames.config;
 
-
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.puresoftware.raymondJames.pojo.BearerTokenGeneratorDetails;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-
-import java.io.IOException;
 import java.util.Collections;
 
 import static com.puresoftware.raymondJames.utils.BearerTokenUtils.*;
+import static com.puresoftware.raymondJames.utils.GlobalUtils.ACCESSTOKEN;
 import static com.puresoftware.raymondJames.utils.GlobalUtils.CONTENT_TYPE;
 
 @Service
 @Slf4j
-public class BearerTokenGeneratorService {
-    private static Logger logger = LoggerFactory.getLogger(BearerTokenGeneratorService.class);
+public class BearerTokenGeneratorConfig {
+    private static Logger logger = LoggerFactory.getLogger(BearerTokenGeneratorConfig.class);
+
+    @Value("${bearer.token.url}")
+    private String bearerTokenUrl;
 
     @Value("${client.id}")
     private String clientId;
@@ -34,13 +37,11 @@ public class BearerTokenGeneratorService {
     @Value("${grant.type}")
     private String grantType;
 
-    @Value("${bearer.token.url}")
-    private String bearerTokenUrl;
-
     @Value("${x.www.form.urlencoded}")
     private String contentTypeEncoded;
 
-    public String generateBearerToken() throws IOException {
+    @SneakyThrows
+    public String generateBearerToken() {
 
         logger.debug("Generating Bearer Token....!!");
 
@@ -49,6 +50,7 @@ public class BearerTokenGeneratorService {
         MultiValueMap<String, String> tokenRequestBody = new LinkedMultiValueMap<String, String>();
 
         HttpEntity request = new HttpEntity(tokenRequestBody, headers);
+        BearerTokenGeneratorDetails.BearerTokenGeneratorResponse bearerTokenGeneratorResponse = new BearerTokenGeneratorDetails.BearerTokenGeneratorResponse();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         headers.set(GRANT_TYPE,grantType);
@@ -60,12 +62,14 @@ public class BearerTokenGeneratorService {
         tokenRequestBody.add(CLIENT_SECRET_KEY,clientSecret);
 
         ResponseEntity<String> response = restTemplate.exchange(bearerTokenUrl, HttpMethod.POST, request, String.class);
-        JSONObject bearerTokenAccessKey = new JSONObject(response.getBody());
-
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode readingResponse = objectMapper.readTree(response.getBody());
+        bearerTokenGeneratorResponse.setAccessToken(readingResponse.get(ACCESSTOKEN).asText());
         try {
-            return bearerTokenAccessKey.getString("access_token");
+            System.out.println(bearerTokenGeneratorResponse.getAccessToken());
+            return bearerTokenGeneratorResponse.getAccessToken();
         } catch (Exception e) {
-            throw new IOException("Bearer Token Generator Service failed to generate access_token..!!");
+            throw new RuntimeException(e);
         }
     }
 }
