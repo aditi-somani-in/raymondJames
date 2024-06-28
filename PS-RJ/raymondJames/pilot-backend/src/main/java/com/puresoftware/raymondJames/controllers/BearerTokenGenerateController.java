@@ -1,6 +1,7 @@
 package com.puresoftware.raymondJames.controllers;
 
-import com.puresoftware.raymondJames.service.BearerTokenGeneratorService;
+import com.puresoftware.raymondJames.config.BearerTokenGeneratorConfig;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,11 +17,12 @@ import java.io.IOException;
 @RestController
 public class BearerTokenGenerateController {
     @Autowired
-    BearerTokenGeneratorService bearerTokenGeneratorService;
+    BearerTokenGeneratorConfig bearerTokenGeneratorConfig;
 
+    @SneakyThrows
     @PostMapping("/generateToken")
-    public ResponseEntity<String> completeTask() throws IOException {
-        String response = bearerTokenGeneratorService.generateBearerToken();
+    public ResponseEntity<String> generateToken() {
+        String response = bearerTokenGeneratorConfig.generateBearerToken();
         return ResponseEntity.ok(response);
     }
 }
