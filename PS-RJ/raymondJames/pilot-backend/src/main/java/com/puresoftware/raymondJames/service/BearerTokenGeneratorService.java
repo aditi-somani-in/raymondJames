@@ -4,6 +4,7 @@ package com.puresoftware.raymondJames.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.puresoftware.raymondJames.pojos.BearerTokenGeneratorDetails;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +44,8 @@ public class BearerTokenGeneratorService {
     @Value("${x.www.form.urlencoded}")
     private String contentTypeEncoded;
 
-    public String generateBearerToken() throws IOException {
+    @SneakyThrows
+    public String generateBearerToken() {
 
         logger.debug("Generating Bearer Token....!!");
 
@@ -70,7 +72,9 @@ public class BearerTokenGeneratorService {
         try {
             return bearerTokenGeneratorResponse.getAccessToken();
         } catch (Exception e) {
-            throw new IOException("Bearer Token Generator Service failed to generate access_token..!!");
+            throw new RuntimeException(e);
         }
+
     }
+
 }

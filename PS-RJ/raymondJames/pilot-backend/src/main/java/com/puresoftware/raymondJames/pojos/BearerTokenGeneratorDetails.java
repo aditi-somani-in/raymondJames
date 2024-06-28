@@ -9,6 +9,6 @@ public class BearerTokenGeneratorDetails {
     public static class BearerTokenGeneratorResponse {
         @Getter
                 @Setter
-        String accessToken;
+        private String accessToken;
     }
 }
