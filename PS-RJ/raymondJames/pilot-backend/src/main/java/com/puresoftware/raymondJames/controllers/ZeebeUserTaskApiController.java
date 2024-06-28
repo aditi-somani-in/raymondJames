@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.puresoftware.raymondJames.service.ZeebeUserTaskApiService;
-
-import okhttp3.Response;
+import com.puresoftware.raymondJames.implementation.ZeebeUserTaskApi;
 
 /**
  * Description: This Controller for all Zeebe User Task Apis
@@ -22,27 +20,27 @@ import okhttp3.Response;
 public class ZeebeUserTaskApiController {
 
 	@Autowired
-	ZeebeUserTaskApiService zeebeUserTaskApiService;
+	ZeebeUserTaskApi zeebeUserTaskApi;
 	
 	@PostMapping("/zeebeApi/assign/{taskId}")
 	public ResponseEntity<String> assignZeebeTask(@PathVariable String taskId, @RequestBody String variableJson) throws IOException{
-		 return zeebeUserTaskApiService.assignZeebeTask(taskId, variableJson);
+		 return zeebeUserTaskApi.assignZeebeTask(taskId, variableJson);
 	}
 	
 	@DeleteMapping("/zeebeApi/unAssign/{taskId}")
 	public ResponseEntity<String> unAssignZeebeTask(@PathVariable String taskId, @RequestBody String variableJson) throws IOException{
-		 return zeebeUserTaskApiService.unAssignZeebeTask(taskId, variableJson);
+		 return zeebeUserTaskApi.unAssignZeebeTask(taskId, variableJson);
 	}
 	
 	@PatchMapping("/zeebeApi/update/{taskId}")
 	public ResponseEntity<String> updateZeebeTask(@PathVariable String taskId, @RequestBody String variableJson) throws IOException{
-		 return zeebeUserTaskApiService.updateZeebeTask(taskId, variableJson);
+		 return zeebeUserTaskApi.updateZeebeTask(taskId, variableJson);
 	}
 	
 	@PostMapping("/zeebeApi/complete/{taskId}")
 	public ResponseEntity<String> completeZeebeTask(@PathVariable String taskId, @RequestBody String variableJson) throws IOException{
 		System.out.println("Test");
-		 return zeebeUserTaskApiService.completeZeebeTask(taskId, variableJson);
+		 return zeebeUserTaskApi.completeZeebeTask(taskId, variableJson);
 	}
 	
 }

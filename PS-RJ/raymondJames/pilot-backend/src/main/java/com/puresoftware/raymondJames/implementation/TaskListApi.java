@@ -2,6 +2,7 @@ package com.puresoftware.raymondJames.implementation;
 
 import com.puresoftware.raymondJames.service.BearerTokenGeneratorService;
 import com.puresoftware.raymondJames.service.TaskListApiService;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -52,8 +53,9 @@ public class TaskListApi implements TaskListApiService {
     private RestTemplate restTemplate;
 
     //For get form details using taskId
+    @SneakyThrows
     @Override
-    public String getForm(String taskId) throws IOException {
+    public String getForm(String taskId) {
         logger.debug("Service for GET A FORM FROM TASKLIST invoked..!!");
         String taskDetails = getTask(taskId);
         JSONObject jsonObject = new JSONObject(taskDetails);
@@ -76,7 +78,7 @@ public class TaskListApi implements TaskListApiService {
 
     //For get task Search from tasklist
     @Override
-    public ResponseEntity<String> searchTask(String requestBody) throws IOException{
+    public ResponseEntity<String> searchTask(String requestBody){
         logger.debug("Service for Search A TASK FROM TASKLIST invoked..!!");
         HttpHeaders headers = new HttpHeaders();
         headers.set(ACCEPT, applicationJson);
@@ -94,7 +96,7 @@ public class TaskListApi implements TaskListApiService {
 
     //For get variable Search from tasklist
     @Override
-    public ResponseEntity<String> variableSearch(String taskId, String requestBody) throws IOException{
+    public ResponseEntity<String> variableSearch(String taskId, String requestBody) {
         logger.debug("Service for Search A Variable FROM TASKLIST invoked..!!");
         String url = camundaApiUrl + taskVersion+ taskId+"/variables/search";
         HttpHeaders headers = new HttpHeaders();
@@ -132,7 +134,7 @@ public class TaskListApi implements TaskListApiService {
     }
 
     @Override
-    public ResponseEntity<String> draftVariable(String taskId, String requestBody) throws IOException {
+    public ResponseEntity<String> draftVariable(String taskId, String requestBody) {
         logger.debug("Service for Draft Variables FROM TASKLIST invoked..!!");
         String url = camundaApiUrl + taskVersion+ taskId+"/variables";
         HttpHeaders headers = new HttpHeaders();
