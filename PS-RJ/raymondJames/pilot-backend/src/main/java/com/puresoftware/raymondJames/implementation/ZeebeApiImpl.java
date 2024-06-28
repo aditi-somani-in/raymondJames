@@ -2,7 +2,7 @@ package com.puresoftware.raymondJames.implementation;
 
 import com.puresoftware.raymondJames.config.BearerTokenGeneratorConfig;
 import com.puresoftware.raymondJames.service.ZeebeApiService;
-import com.puresoftware.raymondJames.headerConfig.HeaderConfig;
+import com.puresoftware.raymondJames.config.HeaderConfig;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

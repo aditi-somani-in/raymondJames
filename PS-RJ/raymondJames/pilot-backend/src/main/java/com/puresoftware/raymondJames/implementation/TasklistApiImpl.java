@@ -1,7 +1,7 @@
 package com.puresoftware.raymondJames.implementation;
 
 import com.puresoftware.raymondJames.service.TasklistApiService;
-import com.puresoftware.raymondJames.headerConfig.HeaderConfig;
+import com.puresoftware.raymondJames.config.HeaderConfig;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
